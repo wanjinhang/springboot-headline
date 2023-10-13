@@ -18,7 +18,8 @@ public class UserController {
     private UserService userService;
     @PostMapping("login")
     public Result login(@RequestBody User user) {
-        UserService.login(user);
-        return  null;
+        System.out.println(user.getUsername());
+        Result result =userService.login(user);
+        return  result;
     }
 }

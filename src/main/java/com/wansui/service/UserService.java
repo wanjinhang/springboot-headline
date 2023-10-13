@@ -2,6 +2,7 @@ package com.wansui.service;
 
 import com.wansui.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wansui.util.Result;
 
 /**
 * @author Administrator
@@ -10,6 +11,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserService extends IService<User> {
 
-    static void login(User user) {
-    }
+    public Result login(User user) ;
 }

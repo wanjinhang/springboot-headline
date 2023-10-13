@@ -5,9 +5,15 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wansui.pojo.User;
 import com.wansui.service.UserService;
 import com.wansui.mapper.UserMapper;
+import com.wansui.util.JwtHelper;
+import com.wansui.util.MD5Util;
 import com.wansui.util.Result;
+import com.wansui.util.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
 
 /**
 * @author Administrator
@@ -20,14 +26,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private JwtHelper jwtHelper;
+    @Override
     public Result login(User user){
-        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<User>();
-        LambdaQueryWrapper<User> eq = wrapper.eq(User::getUsername, user.getUsername());
-        User user1 = userMapper.selectOne(eq);
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUsername, user.getUsername());
+        User loginUser = userMapper.selectOne(wrapper);
+//        判断用户是否为空
+        if(loginUser ==null){
+            return Result.build(null,ResultCodeEnum.USERNAME_ERROR);
+        }
 
+        if(StringUtils.isEmpty(user.getUserPwd())){
+            return Result.build(null,ResultCodeEnum.PASSWORD_ERROR);
+        }
 
-        return null;
+        String encrypt = MD5Util.encrypt(user.getUserPwd());
+        System.out.println(encrypt+"----"+user.getUserPwd());
+        if(encrypt.equals(loginUser.getUserPwd())){
+            String token =jwtHelper.createToken(Long.valueOf(loginUser.getUid()));
+            HashMap<Object, Object> data = new HashMap<>();
+            data.put("token", token);
+            return Result.ok(data);
+        }else{
+            return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
+        }
+
     }
 
 }
