@@ -17,13 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
-* @author Administrator
-* @description 针对表【news_user】的数据库操作Service实现
-* @createDate 2023-10-13 15:36:58
-*/
+ * @author Administrator
+ * @description 针对表【news_user】的数据库操作Service实现
+ * @createDate 2023-10-13 15:36:58
+ */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-    implements UserService{
+        implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -31,63 +31,72 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private JwtHelper jwtHelper;
 
     /**
-     * @description 用户登录
      * @param user
      * @return Result object
+     * @description 用户登录
      */
     @Override
-    public Result login(User user){
+    public Result login(User user) {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getUsername, user.getUsername());
         User loginUser = userMapper.selectOne(wrapper);
 //        判断用户是否为空
-        if(loginUser ==null){
-            return Result.build(null,ResultCodeEnum.USERNAME_ERROR);
+        if (loginUser == null) {
+            return Result.build(null, ResultCodeEnum.USERNAME_ERROR);
         }
 
-        if(StringUtils.isEmpty(user.getUserPwd())){
-            return Result.build(null,ResultCodeEnum.PASSWORD_ERROR);
+        if (StringUtils.isEmpty(user.getUserPwd())) {
+            return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
         }
 
         String encrypt = MD5Util.encrypt(user.getUserPwd());
-        System.out.println(encrypt+"----"+user.getUserPwd());
-        if(encrypt.equals(loginUser.getUserPwd())){
-            String token =jwtHelper.createToken(Long.valueOf(loginUser.getUid()));
+        System.out.println(encrypt + "----" + user.getUserPwd());
+        if (encrypt.equals(loginUser.getUserPwd())) {
+            String token = jwtHelper.createToken(Long.valueOf(loginUser.getUid()));
             HashMap<Object, Object> data = new HashMap<>();
             data.put("token", token);
             return Result.ok(data);
-        }else{
+        } else {
             return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
         }
 
     }
 
     /**
-     * @description 获取用户信息
      * @param token
      * @return
+     * @description 获取用户信息
      */
     @Override
     public Result getUserInfo(String token) {
-        if(jwtHelper.isExpiration(token)){
-            return Result.build(null,ResultCodeEnum.NOTLOGIN);
+        if (jwtHelper.isExpiration(token)) {
+            return Result.build(null, ResultCodeEnum.NOTLOGIN);
         }
 
         int userId = jwtHelper.getUserId(token).intValue();
 
         User loginUser = userMapper.selectById(userId);
 
-        if(loginUser != null){
+        if (loginUser != null) {
             loginUser.setUserPwd("");
-            HashMap<String,Object> data = new HashMap<>();
+            HashMap<String, Object> data = new HashMap<>();
             data.put("loginUser", loginUser);
             return Result.ok(data);
-        }else{
+        } else {
             return Result.build(null, ResultCodeEnum.NOTLOGIN);
         }
+    }
 
-
-
+    @Override
+    public Result checkUser(String username) {
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUsername, username);
+        User user = userMapper.selectOne(wrapper);
+        if(user == null){
+            return Result.ok(null);
+        }else{
+            return Result.build(null,ResultCodeEnum.USERNAME_USED);
+        }
 
     }
 }
