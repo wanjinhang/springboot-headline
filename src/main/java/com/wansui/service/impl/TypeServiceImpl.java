@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wansui.pojo.Type;
 import com.wansui.service.TypeService;
 import com.wansui.mapper.TypeMapper;
+import com.wansui.util.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +16,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class TypeServiceImpl extends ServiceImpl<TypeMapper, Type>
     implements TypeService{
+
+    @Autowired
+    private TypeMapper typeMapper;
 
 }
 

@@ -25,6 +25,7 @@ import java.util.Map;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
 
+
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -87,6 +88,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
     }
 
+    /**
+     * 检查用户名
+     * @param username
+     * @return {@link Result}
+     */
     @Override
     public Result checkUser(String username) {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
@@ -98,6 +104,32 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return Result.build(null,ResultCodeEnum.USERNAME_USED);
         }
 
+    }
+
+    /**
+     * 用户注册
+     *
+     * @param user
+     * @return @return 结果
+     * @author wansui
+     * @date 2023/10/14
+     */
+    @Override
+    public Result regist(User user) {
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUsername, user.getUsername());
+        boolean flag = userMapper.exists(wrapper);
+        if(!flag){
+            user.setUserPwd(MD5Util.encrypt(user.getUserPwd()));
+
+            int row = userMapper.insert(user);
+            return Result.ok(null);
+            
+            
+            
+        }else{
+            return Result.build(null,ResultCodeEnum.USERNAME_USED);
+        }
     }
 }
 

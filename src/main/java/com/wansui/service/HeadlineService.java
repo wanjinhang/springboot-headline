@@ -2,6 +2,8 @@ package com.wansui.service;
 
 import com.wansui.pojo.Headline;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wansui.pojo.vo.PortalVo;
+import com.wansui.util.Result;
 
 /**
 * @author Administrator
@@ -10,4 +12,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface HeadlineService extends IService<Headline> {
 
+    /**
+     * 获取分页查询首页头条信息
+     * @return {@link Result}
+     */
+    Result findNewsPage(PortalVo   portalVo);
 }

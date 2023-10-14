@@ -16,7 +16,7 @@ public interface UserService extends IService<User> {
      * @param token
      * @return
      */
-    public Result getUserInfo(String token);
+    Result getUserInfo(String token);
 
     /**
      * 用户登录
@@ -24,7 +24,7 @@ public interface UserService extends IService<User> {
      * @return
      */
 
-    public Result login(User user) ;
+    Result login(User user) ;
 
     /**
      * 检查用户名
@@ -32,4 +32,6 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result checkUser(String username);
+
+    Result regist(User user);
 }

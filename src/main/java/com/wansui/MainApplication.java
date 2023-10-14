@@ -20,10 +20,25 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.wansui.mapper")
 public class MainApplication {
 
+    /**
+     * 主干道
+     *
+     * @param args ARGS
+     * @return
+     * @author wansui
+     * @date 2023/10/15
+     */
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class,args);
     }
-    //配置mybatis-plus插件
+
+    /**
+     * Mybatis加拦截器
+     *
+     * @return @return {@link MybatisPlusInterceptor }
+     * @author wansui
+     * @date 2023/10/15
+     *///配置mybatis-plus插件
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();

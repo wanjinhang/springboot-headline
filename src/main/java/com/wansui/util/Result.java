@@ -6,6 +6,7 @@ package com.wansui.util;
  * @author wansui
  * @date 2023/10/14
  */
+
 public class Result<T> {
     // 返回码
     private Integer code;
