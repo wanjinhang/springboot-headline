@@ -15,6 +15,7 @@ import lombok.Data;
  */
 @Data
 public class Headline implements Serializable {
+    @TableId
     private Integer hid;
 
     private String title;

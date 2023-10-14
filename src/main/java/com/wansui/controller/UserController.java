@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * @author wansui
  * @date 2023/10/13
  */
+@SuppressWarnings("ALL")
 @RestController
 @RequestMapping("user")
 @CrossOrigin
@@ -21,5 +22,11 @@ public class UserController {
         System.out.println(user.getUsername());
         Result result =userService.login(user);
         return  result;
+    }
+    @GetMapping("getUserInfo")
+    public Result getUserInfo(@RequestHeader String token){
+        Result result = userService.getUserInfo(token);
+
+        return result;
     }
 }

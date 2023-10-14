@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
 * @author Administrator
@@ -28,6 +29,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
     @Autowired
     private JwtHelper jwtHelper;
+
+    /**
+     * @description 用户登录
+     * @param user
+     * @return Result object
+     */
     @Override
     public Result login(User user){
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
@@ -55,6 +62,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     }
 
+    /**
+     * @description 获取用户信息
+     * @param token
+     * @return
+     */
+    @Override
+    public Result getUserInfo(String token) {
+        if(jwtHelper.isExpiration(token)){
+            return Result.build(null,ResultCodeEnum.NOTLOGIN);
+        }
+
+        int userId = jwtHelper.getUserId(token).intValue();
+
+        User loginUser = userMapper.selectById(userId);
+
+        if(loginUser != null){
+            loginUser.setUserPwd("");
+            HashMap<String,Object> data = new HashMap<>();
+            data.put("loginUser", loginUser);
+            return Result.ok(data);
+        }else{
+            return Result.build(null, ResultCodeEnum.NOTLOGIN);
+        }
+
+
+
+
+    }
 }
 
 

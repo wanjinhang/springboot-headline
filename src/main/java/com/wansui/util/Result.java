@@ -2,6 +2,9 @@ package com.wansui.util;
 
 /**
  * 全局统一返回结果类
+ *
+ * @author wansui
+ * @date 2023/10/14
  */
 public class Result<T> {
     // 返回码

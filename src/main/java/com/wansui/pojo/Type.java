@@ -15,6 +15,7 @@ import lombok.Data;
 
 @Data
 public class Type implements Serializable {
+    @TableId
     private Integer tid;
 
     private String tname;

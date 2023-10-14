@@ -11,5 +11,7 @@ import com.wansui.util.Result;
 */
 public interface UserService extends IService<User> {
 
+    public Result getUserInfo(String token);
+
     public Result login(User user) ;
 }
