@@ -17,6 +17,8 @@ mybatis-plus:
       logic-delete-field: isDeleted
       id-type: auto
       table-prefix: news_
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 jwt:
   token:
     tokenExpiration: 120

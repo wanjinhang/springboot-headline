@@ -37,14 +37,15 @@
         </if>
     </select>
 
-    <!--    <select id="selectMyPage" resultType="map">-->
-<!--        select hid,title,type,page_views pageViews,TIMESTAMPDIFF(HOUR,create_time,NOW()) pastHours,-->
-<!--        publisher from news_headline where is_deleted=0-->
-<!--        <if test="portalVo.keyWords !=null and portalVo.keyWords.length()>0 ">-->
-<!--            and title like concat('%',#{portalVo.keyWords},'%')-->
-<!--        </if>-->
-<!--        <if test="portalVo.type != null and portalVo.type != 0">-->
-<!--            and type = #{portalVo.type}-->
-<!--        </if>-->
-<!--    </select>-->
+<!--    Map getHeadlineMap(int hid);-->
+    <select id="getHeadlineMap" resultType="java.util.Map">
+
+        select hid,title,article,type,h.version,page_views pageViews,t.tname typeName,h.publisher,u.nick_name author ,TIMESTAMPDIFF(HOUR,h.create_time,now()) pastHours
+        from news_headline h
+            left join news_type  t on h.type = t.tid
+            left join news_user  u on h.publisher = u.uid
+        where h.is_deleted= 0 and h.hid =#{hid}
+
+    </select>
+
 </mapper>

@@ -17,12 +17,26 @@ import java.util.Map;
 public interface HeadlineMapper extends BaseMapper<Headline> {
 
     /**
+     * 选择我页面
+     *
      * @param page
      * @param portalVo
-     * @return
+     * @return @return {@link IPage }<{@link Map }>
+     * @author wansui
+     * @date 2023/10/15
      */
     IPage<Map> selectMyPage(IPage<Headline> page,
                             @Param("portalVo") PortalVo portalVo);
+
+    /**
+     * 获取标题地图
+     *
+     * @param hid 藏起
+     * @return @return {@link Map }
+     * @author wansui
+     * @date 2023/10/15
+     */
+    Map getHeadlineMap(@Param("hid") Integer hid);
 }
 
 

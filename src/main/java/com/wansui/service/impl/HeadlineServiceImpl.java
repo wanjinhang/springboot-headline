@@ -57,6 +57,33 @@ public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline>
         return Result.ok(pageInfoMap);
 
     }
+
+    /**
+     * 显示标题详细信息
+     *
+     * @param hid 藏起
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/15
+     */
+    @Override
+    public Result showHeadlineDetail(Integer hid) {
+
+        Map headlineMap=headlineMapper.getHeadlineMap(hid);
+        Map data = new HashMap();
+        int version = (int) headlineMap.get("version");
+        headlineMap.remove("version");
+
+        data.put("headline",headlineMap);
+
+        Headline headline = new Headline();
+        headline.setHid((Integer) headlineMap.get("hid"));
+        headline.setVersion((Integer) headlineMap.get("version"));
+        headline.setPageViews((Integer) headlineMap.get("pageViews")+1);
+        headlineMapper.updateById(headline);
+
+        return Result.ok(data);
+    }
 }
 
 

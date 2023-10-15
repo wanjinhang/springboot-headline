@@ -59,4 +59,18 @@ public class PortalController {
 
     }
 
+    /**
+     * 显示标题详细信息
+     *
+     * @param hid 文章Id
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/15
+     */
+    @PostMapping("showHeadlineDetail")
+    public Result showHeadlineDetail(int hid){
+
+        return headlineService.showHeadlineDetail(hid);
+    }
+
 }
