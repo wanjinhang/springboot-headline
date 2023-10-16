@@ -3,7 +3,6 @@ package com.wansui.controller;
 import com.wansui.pojo.User;
 import com.wansui.service.UserService;
 import com.wansui.util.Result;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -86,6 +85,6 @@ public class UserController {
     @GetMapping("checkLogin")
     public Result checkLogin(@RequestHeader String token){
 
-        return UserService.checkLogin(token);
+        return userService.checkLogin(token);
     }
 }
