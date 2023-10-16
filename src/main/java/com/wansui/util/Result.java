@@ -1,6 +1,7 @@
 package com.wansui.util;
 
 /**
+ * 结果
  * 全局统一返回结果类
  *
  * @author wansui

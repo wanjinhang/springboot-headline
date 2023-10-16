@@ -74,4 +74,18 @@ public class UserController {
     public Result regist(@RequestBody User user){
         return userService.regist(user);
     }
+
+    /**
+     * 检查登录
+     *
+     * @param token 令 牌
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/16
+     */
+    @GetMapping("checkLogin")
+    public Result checkLogin(@RequestHeader String token){
+
+        return UserService.checkLogin(token);
+    }
 }

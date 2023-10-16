@@ -131,6 +131,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return Result.build(null,ResultCodeEnum.USERNAME_USED);
         }
     }
+
+    /**
+     * 检查登录
+     *
+     * @param token 令牌
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/16
+     */
+    @Override
+    public Result checkLogin(String token) {
+        boolean expiration = jwtHelper.isExpiration(token);
+        if (expiration) {
+            return Result.build(null, ResultCodeEnum.NOTLOGIN);
+        }
+
+        return null;
+    }
 }
 
 

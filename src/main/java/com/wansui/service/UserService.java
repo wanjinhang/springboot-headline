@@ -11,6 +11,8 @@ import com.wansui.util.Result;
 */
 public interface UserService extends IService<User> {
 
+
+
     /**
      * 获取用户信息
      * @param token
@@ -33,5 +35,23 @@ public interface UserService extends IService<User> {
      */
     Result checkUser(String username);
 
+    /**
+     * 雷吉斯特
+     *
+     * @param user 用户
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/16
+     */
     Result regist(User user);
+
+    /**
+     * 检查登录
+     *
+     * @param token 令牌
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/16
+     */
+    Result checkLogin(String token);
 }
