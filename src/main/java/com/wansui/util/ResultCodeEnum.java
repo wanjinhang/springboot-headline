@@ -3,6 +3,7 @@ package com.wansui.util;
 /**
  * 统一返回结果状态信息类
  *
+ * @author Administrator
  */
 public enum ResultCodeEnum {
 

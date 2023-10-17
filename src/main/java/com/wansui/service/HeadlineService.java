@@ -31,4 +31,44 @@ public interface HeadlineService extends IService<Headline> {
      * @date 2023/10/15
      */
     Result showHeadlineDetail(Integer hid);
+
+    /**
+     * 出版
+     *
+     * @param headline 标题
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/17
+     */
+    Result publish(Headline headline);
+
+    /**
+     * 按隐藏查找标题
+     *
+     * @param hid 藏起
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/17
+     */
+    Result findHeadlineByHid(Integer hid);
+
+    /**
+     * 更新
+     *
+     * @param headline 标题
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/17
+     */
+    Result update(Headline headline);
+
+    /**
+     * 按HID删除
+     *
+     * @param hid 藏起
+     * @return @return {@link Result }
+     * @author wansui
+     * @date 2023/10/17
+     */
+    Result removeByHid(Integer hid);
 }

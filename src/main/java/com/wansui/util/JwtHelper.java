@@ -4,7 +4,6 @@ import com.alibaba.druid.util.StringUtils;
 import io.jsonwebtoken.*;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -33,12 +32,12 @@ public class JwtHelper {
     }
 
     //从token字符串获取userid
-    public  Long getUserId(String token) {
+    public Integer getUserId(String token) {
         if(StringUtils.isEmpty(token)) return null;
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token);
         Claims claims = claimsJws.getBody();
         Integer userId = (Integer)claims.get("userId");
-        return userId.longValue();
+        return userId;
     }
 
 
